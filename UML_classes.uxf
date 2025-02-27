@@ -1,0 +1,35 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>670</x><y>420</y><w>360</w><h>230</h></coordinates><panel_attributes>Utilisateur
+--
+- id : int
+- nom : string
+- prenom : string
+- email : string (1)
+- password : string
+- role : string (ADMIN | ABONNE)
+--
++ getters / setters
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>20</y><w>360</w><h>230</h></coordinates><panel_attributes>Film
+--
+- id : int
+- titre : string (1)
+- image : string
+- description : string
+- dateSortie : datetime
+- genre : string
+--
++ getters / setters
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>550</y><w>160</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=0..n
+</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>420</y><w>360</w><h>230</h></coordinates><panel_attributes>FilmFavoris
+--
+- id : int
+- titre : string (1)
+- image : string
+- description : string
+- dateSortie : datetime
+- genre : string
+- dateAjout : datetime
+--
++ getters / setters
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>240</y><w>30</w><h>200</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;180</additional_attributes></element></diagram>
