@@ -20,7 +20,7 @@
 + getters / setters
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>530</x><y>550</y><w>160</w><h>50</h></coordinates><panel_attributes>lt=-
 m1=0..n
-m2=0..n
+m2=1..n
 </panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>420</y><w>360</w><h>230</h></coordinates><panel_attributes>FilmFavoris
 --
 - id : int
