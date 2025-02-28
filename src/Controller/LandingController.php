@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Film;
 use App\Form\FilmEditType;
 use App\Form\FilmInsertType;
+use App\Entity\FilmUtilisateur;
 use App\Repository\FilmRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\FilmUtilisateurRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -64,4 +66,32 @@ final class LandingController extends AbstractController{
             'form' => $form
         ]);
     }
+
+    #[Route('/landing/{id}/favoris', name: 'app_landing_favoris', methods: ['GET', 'POST', 'PUT', 'PATCH'])]
+    public function addFavoris(Film $film, EntityManagerInterface $em, FilmUtilisateurRepository $repo): Response
+    {
+        $abonne = $this->getUser();
+
+        // Vérifier si le film est déjà en favoris
+        $favoriExiste = $repo->findOneBy([
+            'film' => $film,
+            'utilisateur' => $abonne
+        ]);
+
+        if ($favoriExiste) {
+            return $this->redirectToRoute('app_landing');
+        }
+
+        // Créer un nouvel objet FilmUtilisateur (lien entre User et Film)
+        $filmUtilisateur = new FilmUtilisateur();
+        $filmUtilisateur->setFilm($film);
+        $filmUtilisateur->setUtilisateur($abonne);
+        $filmUtilisateur->setDateAjout(new \DateTime());
+
+        $em->persist($filmUtilisateur);
+        $em->flush();
+
+        return $this->redirectToRoute('app_landing'); // Redirection vers la liste des films
+    }
+
 }

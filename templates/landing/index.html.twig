@@ -19,6 +19,13 @@
                 <li>{{ item.genre }}</li>
                 <li>{{ item.dateSortie ? item.dateSortie|date('d/m/Y') : 'Date inconnue' }}</li>
             </ul>
+
+            {% if not is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_landing_favoris', {id: item.id }) }}">
+                    j'aime !
+                </a>
+            {% endif %}
+
             {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('app_landing_delete', {id: item.id }) }}">
                 supprimer

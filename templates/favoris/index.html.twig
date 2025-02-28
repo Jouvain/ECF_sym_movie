@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FavorisController!{% endblock %}
+{% block title %}Favoris{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>SYM Movies</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/cyril/Documents/Apprentissage/développement/2i Academy/Cours/Symfony/EXOS/sym_movie_cyril/projet_symmovie_cyril/src/Controller/FavorisController.php</code></li>
-        <li>Your template at <code>C:/Users/cyril/Documents/Apprentissage/développement/2i Academy/Cours/Symfony/EXOS/sym_movie_cyril/projet_symmovie_cyril/templates/favoris/index.html.twig</code></li>
-    </ul>
+    <h2> Mes films rien qu'à moi :</h2>
+    {% if favoris is defined and favoris != null %}
+        {% for item in favoris %}
+            <h3>{{ item.film.titre }}</h3>
+            <ul>
+                <li>{{ item.film.genre }}</li>
+                <li>{{ item.film.dateSortie ? item.film.dateSortie|date('d/m/Y') : 'Date inconnue' }}</li>
+            </ul>
+        {% endfor %}
+    {% endif %}
 </div>
+
 {% endblock %}
