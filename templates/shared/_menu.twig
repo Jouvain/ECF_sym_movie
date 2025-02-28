@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary color-light">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {# <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_login') }}">Accueil</a>
+        </li> #}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_landing') }}">Films</a>
+        </li>
+        {% if not is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_compte') }}">Mon compte</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_favoris') }}">Favoris</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+        </li>
+        <li>
+            {{ app.user.nom }}
+            {{ app.user.prenom }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
