@@ -18,6 +18,14 @@
         <li> Prenom : {{app.user.prenom}}  </li>
         <li> Mail : {{app.user.email}} </li>
     </ul>
+
+    <a href="{{ path('app_compte_delete', {id: app.user.id }) }}">
+        Se désabonner
+    </a>
+    <a href="{{ path('app_compte_edit', {id: app.user.id }) }}">
+        Modifier ses informations
+    </a>
+
     {% else %}
     <h1> Vous ne devriez pas voir cette page ! </h1>
     {% endif %}
