@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CompteController!{% endblock %}
+{% block title %}Mon compte SYM-Movies{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if app.user is defined and app.user != null %}
+    <h1>Bonjour {{ app.user.prenom }} !</h1>
 
-    This friendly message is coming from:
+    Informations personnelles :
     <ul>
-        <li>Your controller at <code>C:/Users/cyril/Documents/Apprentissage/développement/2i Academy/Cours/Symfony/EXOS/sym_movie_cyril/projet_symmovie_cyril/src/Controller/CompteController.php</code></li>
-        <li>Your template at <code>C:/Users/cyril/Documents/Apprentissage/développement/2i Academy/Cours/Symfony/EXOS/sym_movie_cyril/projet_symmovie_cyril/templates/compte/index.html.twig</code></li>
+        <li> Nom : {{app.user.nom}} </li>
+        <li> Prenom : {{app.user.prenom}}  </li>
+        <li> Mail : {{app.user.email}} </li>
     </ul>
+    {% else %}
+    <h1> Vous ne devriez pas voir cette page ! </h1>
+    {% endif %}
+
 </div>
 {% endblock %}
