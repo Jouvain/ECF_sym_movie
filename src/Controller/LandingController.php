@@ -72,7 +72,6 @@ final class LandingController extends AbstractController{
     {
         $abonne = $this->getUser();
 
-        // Vérifier si le film est déjà en favoris
         $favoriExiste = $repo->findOneBy([
             'film' => $film,
             'utilisateur' => $abonne
@@ -82,7 +81,6 @@ final class LandingController extends AbstractController{
             return $this->redirectToRoute('app_landing');
         }
 
-        // Créer un nouvel objet FilmUtilisateur (lien entre User et Film)
         $filmUtilisateur = new FilmUtilisateur();
         $filmUtilisateur->setFilm($film);
         $filmUtilisateur->setUtilisateur($abonne);
@@ -91,7 +89,7 @@ final class LandingController extends AbstractController{
         $em->persist($filmUtilisateur);
         $em->flush();
 
-        return $this->redirectToRoute('app_landing'); // Redirection vers la liste des films
+        return $this->redirectToRoute('app_landing'); 
     }
 
 }
