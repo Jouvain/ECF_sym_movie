@@ -19,6 +19,9 @@
                 <li>{{ item.film.genre }}</li>
                 <li>{{ item.film.dateSortie ? item.film.dateSortie|date('d/m/Y') : 'Date inconnue' }}</li>
             </ul>
+            <a href="{{ path('app_favoris_delete', {id: item.id }) }}">
+                supprimer
+            </a>
         {% endfor %}
     {% endif %}
 </div>

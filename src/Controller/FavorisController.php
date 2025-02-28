@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\FilmUtilisateur;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\FilmUtilisateurRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class FavorisController extends AbstractController{
     #[Route('/favoris', name: 'app_favoris')]
@@ -15,5 +17,13 @@ final class FavorisController extends AbstractController{
             'controller_name' => 'FavorisController',
             'favoris' => $repo->findAll()
         ]);
+    }
+
+    #[Route('/favoris/delete/{id}', name: 'app_favoris_delete')]
+    public function delete(FilmUtilisateur $film, EntityManagerInterface $em): Response
+    {
+        $em->remove($film);
+        $em->flush();
+        return $this->redirectToRoute('app_favoris');
     }
 }
