@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +16,7 @@ class Film
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -28,6 +30,17 @@ class Film
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $genre = null;
+
+    /**
+     * @var Collection<int, FilmUtilisateur>
+     */
+    #[ORM\OneToMany(targetEntity: FilmUtilisateur::class, mappedBy: 'miseEnFavoris')]
+    private Collection $misesEnFavori;
+
+    public function __construct()
+    {
+        $this->misesEnFavori = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +103,36 @@ class Film
     public function setGenre(?string $genre): static
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FilmUtilisateur>
+     */
+    public function getMisesEnFavori(): Collection
+    {
+        return $this->misesEnFavori;
+    }
+
+    public function addMisesEnFavori(FilmUtilisateur $misesEnFavori): static
+    {
+        if (!$this->misesEnFavori->contains($misesEnFavori)) {
+            $this->misesEnFavori->add($misesEnFavori);
+            $misesEnFavori->setMiseEnFavoris($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMisesEnFavori(FilmUtilisateur $misesEnFavori): static
+    {
+        if ($this->misesEnFavori->removeElement($misesEnFavori)) {
+            // set the owning side to null (unless already changed)
+            if ($misesEnFavori->getMiseEnFavoris() === $this) {
+                $misesEnFavori->setMiseEnFavoris(null);
+            }
+        }
 
         return $this;
     }

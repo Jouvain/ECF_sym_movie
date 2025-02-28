@@ -40,9 +40,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     /**
-     * @var Collection<int, Film>
+     * @var Collection<int, FilmUtilisateur>
      */
-    #[ORM\ManyToMany(targetEntity: Film::class)]
+    #[ORM\OneToMany(targetEntity: FilmUtilisateur::class, mappedBy: 'utilisateur')]
     private Collection $favoris;
 
     public function __construct()
@@ -149,25 +149,31 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Film>
+     * @return Collection<int, FilmUtilisateur>
      */
     public function getFavoris(): Collection
     {
         return $this->favoris;
     }
 
-    public function addFavori(Film $favori): static
+    public function addFavori(FilmUtilisateur $favori): static
     {
         if (!$this->favoris->contains($favori)) {
             $this->favoris->add($favori);
+            $favori->setUtilisateur($this);
         }
 
         return $this;
     }
 
-    public function removeFavori(Film $favori): static
+    public function removeFavori(FilmUtilisateur $favori): static
     {
-        $this->favoris->removeElement($favori);
+        if ($this->favoris->removeElement($favori)) {
+            // set the owning side to null (unless already changed)
+            if ($favori->getUtilisateur() === $this) {
+                $favori->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }
