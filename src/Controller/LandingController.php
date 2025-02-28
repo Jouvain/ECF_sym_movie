@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Film;
+use App\Form\FilmEditType;
 use App\Form\FilmInsertType;
 use App\Repository\FilmRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,5 +47,21 @@ final class LandingController extends AbstractController{
         $em->remove($film);
         $em->flush();
         return $this->redirectToRoute('app_landing');
+    }
+
+    #[Route('/landing/edit/{id}', name: 'app_landing_edit', methods: ['GET', 'POST', 'PUT', 'PATCH'])]
+    public function edit(Film $film,EntityManagerInterface $em, Request $req): Response
+    {
+        $form = $this->createForm(FilmEditType::class, $film);
+        $form->handleRequest($req);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $film = $form->getData();
+            $em->flush();
+            return $this->redirectToRoute('app_landing');
+        }
+        return $this->render('landing/edit.html.twig', [
+            'controller_name' => 'LandingController',
+            'form' => $form
+        ]);
     }
 }

@@ -23,6 +23,9 @@
             <a href="{{ path('app_landing_delete', {id: item.id }) }}">
                 supprimer
             </a>
+            <a href="{{ path('app_landing_edit', {id: item.id }) }}">
+                éditer
+            </a>
             {% endif %}
         {% endfor %}
     {% endif %}
