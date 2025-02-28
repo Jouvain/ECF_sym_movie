@@ -11,10 +11,27 @@
 <div class="example-wrapper">
     <h1>SYM Movies</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/cyril/Documents/Apprentissage/développement/2i Academy/Cours/Symfony/EXOS/sym_movie_cyril/projet_symmovie_cyril/src/Controller/LandingController.php</code></li>
-        <li>Your template at <code>C:/Users/cyril/Documents/Apprentissage/développement/2i Academy/Cours/Symfony/EXOS/sym_movie_cyril/projet_symmovie_cyril/templates/landing/index.html.twig</code></li>
-    </ul>
+    <h2>Films à voir et à revoir :</h2>
+    {% if films is defined and films != null %}
+        {% for item in films %}
+            <h3>{{ item.titre }}</h3>
+            <ul>
+                <li>{{ item.genre }}</li>
+                <li>{{ item.dateSortie ? item.dateSortie|date('d/m/Y') : 'Date inconnue' }}</li>
+            </ul>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('app_landing_delete', {id: item.id }) }}">
+                supprimer
+            </a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </div>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_landing_new') }}">
+        Ajouter un film
+    </a>
+{% endif %}
+
 {% endblock %}
